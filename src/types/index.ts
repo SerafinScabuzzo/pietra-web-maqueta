@@ -45,3 +45,25 @@ export interface Catalog {
   images?: string[]; // Imágenes adicionales opcionales
   pdfUrl?: string;
 }
+
+/** Lista de precios (Admin) — PDF o Excel mock */
+export interface PriceList {
+  id: string;
+  listType: string;
+  validity: string;
+  order: number;
+  imageUrl?: string;
+  fileFormat: 'xlsx' | 'pdf';
+  fileName?: string;
+  fileUrl?: string;
+}
+
+/** Pedido visible en Admin — mock de historial */
+export interface AdminOrder {
+  id: string;
+  clientName: string;
+  clientCode?: string;
+  date: string;
+  time: string;
+  total: number;
+}

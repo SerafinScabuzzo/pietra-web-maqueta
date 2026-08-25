@@ -14,15 +14,20 @@ import Marcas from '../../pages/Marcas';
 import Producto from '../../pages/Producto';
 import Favoritos from '../../pages/Favoritos';
 import MiCuenta from '../../pages/MiCuenta';
+import MisPedidos from '../../pages/MisPedidos';
+import MisFacturas from '../../pages/MisFacturas';
 import RevisarPedido from '../../pages/RevisarPedido';
 import AdminLayout from '../../pages/admin/AdminLayout';
 import AdminDashboard from '../../pages/admin/AdminDashboard';
 import AdminProductos from '../../pages/admin/AdminProductos';
 import AdminMarcas from '../../pages/admin/AdminMarcas';
 import AdminRubros from '../../pages/admin/AdminRubros';
+import AdminSubrubros from '../../pages/admin/AdminSubrubros';
 import AdminCatalogos from '../../pages/admin/AdminCatalogos';
+import AdminListas from '../../pages/admin/AdminListas';
 import AdminBanners from '../../pages/admin/AdminBanners';
 import AdminClientes from '../../pages/admin/AdminClientes';
+import AdminPedidos from '../../pages/admin/AdminPedidos';
 import AdminRoute from '../../components/AdminRoute';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -69,6 +74,8 @@ const AppRouter = () => {
             <Route path="/producto/:productId" element={<Producto />} />
             <Route path="/favoritos" element={<Favoritos />} />
             <Route path="/mi-cuenta" element={<MiCuenta />} />
+            <Route path="/mis-pedidos" element={<MisPedidos />} />
+            <Route path="/mis-facturas" element={<MisFacturas />} />
             <Route path="/revisar-pedido" element={<RevisarPedido />} />
             
             {/* Admin Routes */}
@@ -84,9 +91,12 @@ const AppRouter = () => {
               <Route path="productos" element={<AdminProductos />} />
               <Route path="marcas" element={<AdminMarcas />} />
               <Route path="rubros" element={<AdminRubros />} />
+              <Route path="subrubros" element={<AdminSubrubros />} />
               <Route path="catalogos" element={<AdminCatalogos />} />
+              <Route path="listas" element={<AdminListas />} />
               <Route path="banners" element={<AdminBanners />} />
               <Route path="clientes" element={<AdminClientes />} />
+              <Route path="pedidos" element={<AdminPedidos />} />
             </Route>
             </Routes>
           </main>

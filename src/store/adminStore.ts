@@ -1,9 +1,11 @@
-import { Product, Brand, Catalog, Category, Subcategory } from '../types';
+import { Product, Brand, Catalog, Category, Subcategory, PriceList, AdminOrder } from '../types';
 import { products as initialProducts } from '../data/mocks/products';
 import { brands as initialBrands } from '../data/mocks/brands';
 import { categories as initialCategories } from '../data/mocks/categories';
 import { subcategories as initialSubcategories } from '../data/mocks/subcategories';
 import { catalogs as initialCatalogs } from '../data/mocks/catalogs';
+import { priceLists as initialPriceLists } from '../data/mocks/priceLists';
+import { orders as initialOrders } from '../data/mocks/orders';
 import { checkCatalogInvariants } from '../utils/catalogInvariants';
 
 export interface Banner {
@@ -55,6 +57,11 @@ let adminCategories: Category[] = JSON.parse(JSON.stringify(initialCategories));
 let adminSubcategories: Subcategory[] = JSON.parse(JSON.stringify(initialSubcategories));
 let adminCatalogs: Catalog[] = JSON.parse(JSON.stringify(initialCatalogs));
 let adminBanners: Banner[] = defaultBanners();
+let adminPriceLists: PriceList[] = JSON.parse(JSON.stringify(initialPriceLists));
+let adminOrders: AdminOrder[] = JSON.parse(JSON.stringify(initialOrders));
+let loadedSubcategoriesFromStorage = false;
+let loadedPriceListsFromStorage = false;
+let loadedOrdersFromStorage = false;
 
 const normalizeBrands = (): void => {
   adminBrands = JSON.parse(JSON.stringify(initialBrands));
@@ -125,9 +132,17 @@ const normalizeCatalogs = (): void => {
 const normalizeData = (): void => {
   normalizeBrands();
   normalizeCategories();
-  normalizeSubcategories();
+  if (!loadedSubcategoriesFromStorage) {
+    normalizeSubcategories();
+  }
   normalizeProducts();
   normalizeCatalogs();
+  if (!loadedPriceListsFromStorage) {
+    adminPriceLists = JSON.parse(JSON.stringify(initialPriceLists));
+  }
+  if (!loadedOrdersFromStorage) {
+    adminOrders = JSON.parse(JSON.stringify(initialOrders));
+  }
 };
 
 const loadFromStorage = () => {
@@ -141,6 +156,18 @@ const loadFromStorage = () => {
         if (data.products) adminProducts = data.products;
         if (data.catalogs) adminCatalogs = data.catalogs;
         if (data.banners) adminBanners = data.banners;
+        if (Array.isArray(data.subcategories) && data.subcategories.length > 0) {
+          adminSubcategories = data.subcategories;
+          loadedSubcategoriesFromStorage = true;
+        }
+        if (Array.isArray(data.priceLists)) {
+          adminPriceLists = data.priceLists;
+          loadedPriceListsFromStorage = true;
+        }
+        if (Array.isArray(data.orders)) {
+          adminOrders = data.orders;
+          loadedOrdersFromStorage = true;
+        }
       }
     }
   } catch (e) {
@@ -173,8 +200,11 @@ const saveToStorage = () => {
         products: adminProducts,
         brands: adminBrands,
         categories: adminCategories,
+        subcategories: adminSubcategories,
         catalogs: adminCatalogs,
         banners: adminBanners,
+        priceLists: adminPriceLists,
+        orders: adminOrders,
       })
     );
   } catch (e) {
@@ -258,13 +288,73 @@ export const deleteCategory = (id: string): void => {
   saveToStorage();
 };
 
-export const getSubcategories = (): Subcategory[] => [...adminSubcategories];
+export const getSubcategories = (): Subcategory[] =>
+  [...adminSubcategories].sort((a, b) => {
+    const byName = a.name.localeCompare(b.name, 'es');
+    if (byName !== 0) return byName;
+    return (a.order ?? 0) - (b.order ?? 0);
+  });
 export const getSubcategory = (id: string): Subcategory | undefined =>
   adminSubcategories.find((s) => s.id === id);
 export const getSubcategoriesByCategory = (categoryId: string): Subcategory[] =>
   adminSubcategories
     .filter((s) => s.categoryId === categoryId)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+export const createSubcategory = (subcategory: Subcategory): void => {
+  adminSubcategories.push(subcategory);
+  saveToStorage();
+};
+export const updateSubcategory = (id: string, updates: Partial<Subcategory>): void => {
+  const index = adminSubcategories.findIndex((s) => s.id === id);
+  if (index !== -1) {
+    const { id: _, ...safeUpdates } = updates;
+    adminSubcategories[index] = { ...adminSubcategories[index], ...safeUpdates };
+    saveToStorage();
+  }
+};
+export const deleteSubcategory = (id: string): boolean => {
+  const hasProducts = adminProducts.some((p) => p.subcategoryId === id);
+  if (hasProducts) {
+    console.warn('No se puede eliminar un subrubro que tiene productos asignados');
+    return false;
+  }
+  adminSubcategories = adminSubcategories.filter((s) => s.id !== id);
+  saveToStorage();
+  return true;
+};
+export const deleteSubcategories = (ids: string[]): { deleted: number; blocked: number } => {
+  let deleted = 0;
+  let blocked = 0;
+  ids.forEach((id) => {
+    if (deleteSubcategory(id)) deleted += 1;
+    else blocked += 1;
+  });
+  return { deleted, blocked };
+};
+
+export const getPriceLists = (): PriceList[] =>
+  [...adminPriceLists].sort((a, b) => a.order - b.order);
+export const getPriceList = (id: string): PriceList | undefined =>
+  adminPriceLists.find((l) => l.id === id);
+export const createPriceList = (list: PriceList): void => {
+  adminPriceLists.push(list);
+  saveToStorage();
+};
+export const updatePriceList = (id: string, updates: Partial<PriceList>): void => {
+  const index = adminPriceLists.findIndex((l) => l.id === id);
+  if (index !== -1) {
+    adminPriceLists[index] = { ...adminPriceLists[index], ...updates };
+    saveToStorage();
+  }
+};
+export const deletePriceList = (id: string): void => {
+  adminPriceLists = adminPriceLists.filter((l) => l.id !== id);
+  saveToStorage();
+};
+
+export const getOrders = (): AdminOrder[] => [...adminOrders];
+export const getOrder = (id: string): AdminOrder | undefined =>
+  adminOrders.find((o) => o.id === id);
 
 export const getCatalogs = (): Catalog[] => [...adminCatalogs];
 export const getCatalog = (id: string): Catalog | undefined =>

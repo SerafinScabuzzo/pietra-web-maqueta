@@ -1,5 +1,7 @@
-import { Client, Cart } from '../types/client';
+import { Client, Cart, ClientOrder, ClientInvoice } from '../types/client';
 import { clients as initialClients } from '../data/mocks/clients';
+import { clientOrders as initialClientOrders } from '../data/mocks/clientOrders';
+import { clientInvoices as initialClientInvoices } from '../data/mocks/clientInvoices';
 
 const CLIENTS_STORAGE_KEY = 'pietra_clients';
 const CURRENT_CLIENT_KEY = 'pietra_current_client';
@@ -16,7 +18,20 @@ const loadClients = (): void => {
       const parsed = JSON.parse(stored);
       // Validar que sea un array y tenga al menos el cliente por defecto
       if (Array.isArray(parsed) && parsed.length > 0) {
-        clientList = parsed;
+        const seedByCuit = new Map(
+          initialClients.map((c) => [c.cuit, c] as const)
+        );
+        clientList = parsed.map((c: Client) => {
+          const seed = seedByCuit.get(c.cuit);
+          return {
+            ...seed,
+            ...c,
+            email: c.email ?? seed?.email ?? '',
+            clientNumber: c.clientNumber ?? seed?.clientNumber ?? c.code,
+            favorites: c.favorites || [],
+          };
+        });
+        saveClients();
       } else {
         // Si está corrupto o vacío, resetear
         clientList = JSON.parse(JSON.stringify(initialClients));
@@ -105,10 +120,12 @@ export const ensureDemoClient = (): Client => {
       id: demoCuit,
       cuit: demoCuit,
       code: '111111',
+      clientNumber: '111',
       firstName: 'Demo',
       lastName: 'Demo',
       businessName: 'Negocio Demo',
       address: 'Dirección Demo 123',
+      email: 'demo@pietraitaly.com.ar',
       discountRate: 0.55,
       favorites: [],
     };
@@ -345,3 +362,9 @@ export const clearCart = (): void => {
 
   saveCart(client.cuit, { items: [] });
 };
+
+export const getClientOrders = (cuit: string): ClientOrder[] =>
+  initialClientOrders.filter((o) => o.clientCuit === cuit);
+
+export const getClientInvoices = (cuit: string): ClientInvoice[] =>
+  initialClientInvoices.filter((i) => i.clientCuit === cuit);

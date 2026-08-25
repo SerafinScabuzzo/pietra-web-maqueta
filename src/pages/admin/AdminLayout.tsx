@@ -17,9 +17,12 @@ const AdminLayout = () => {
     { path: '/admin/productos', label: 'Productos', icon: '📦' },
     { path: '/admin/marcas', label: 'Marcas', icon: '🏷️' },
     { path: '/admin/rubros', label: 'Rubros', icon: '📁' },
+    { path: '/admin/subrubros', label: 'SubRubros', icon: '📂' },
     { path: '/admin/catalogos', label: 'Catálogos', icon: '📚' },
+    { path: '/admin/listas', label: 'Listas', icon: '📋' },
     { path: '/admin/banners', label: 'Banners', icon: '🖼️' },
     { path: '/admin/clientes', label: 'Clientes', icon: '👥' },
+    { path: '/admin/pedidos', label: 'Pedidos', icon: '🧾' },
   ];
 
   return (
