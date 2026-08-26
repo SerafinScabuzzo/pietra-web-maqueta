@@ -106,24 +106,24 @@ const SearchBar = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full md:w-[480px]">
+    <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto">
       <div className="relative" ref={wrapRef}>
         <div className="flex gap-2">
           <input
             type="text"
-            placeholder="Buscar por producto, rubro o código"
+            placeholder="Buscar producto o código"
             value={searchQuery}
             onChange={(e) => handleChange(e.target.value)}
             onFocus={() => {
               if (suggestions.length > 0) setOpen(true);
             }}
             onKeyDown={handleKeyDown}
-            className="flex-1 px-5 py-3 text-base border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brandBlue focus:border-brandBlue transition-colors"
+            className="flex-1 min-w-0 px-3 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brandBlue focus:border-brandBlue transition-colors"
             autoComplete="off"
             aria-autocomplete="list"
             aria-expanded={open}
           />
-          <button type="submit" className="btn-primary px-6 py-3 whitespace-nowrap">
+          <button type="submit" className="btn-primary px-3 sm:px-6 py-2.5 sm:py-3 whitespace-nowrap text-sm sm:text-base">
             Buscar
           </button>
         </div>

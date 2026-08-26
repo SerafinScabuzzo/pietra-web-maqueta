@@ -8,7 +8,7 @@ export interface Client {
   businessName: string;
   address: string;
   email?: string;
-  discountRate: number; // ej 0.55 (55% descuento, paga 45%)
+  discountRate: number; // ej 0.4 (40% descuento, paga 60%)
   favorites: string[]; // productIds
 }
 

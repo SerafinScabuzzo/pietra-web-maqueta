@@ -153,7 +153,7 @@ export const setClientDemoMode = (): boolean => {
       lastName: 'Demo',
       businessName: 'Negocio Demo',
       address: 'Direccion Demo 123',
-      discountRate: 0.55,
+      discountRate: 0.4,
       favorites: [] as string[],
     };
     

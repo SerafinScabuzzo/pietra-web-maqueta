@@ -80,7 +80,7 @@ const RevisarPedido = () => {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/buscar" className="btn-accent">
-              VOLVER A ARMAR PEDIDO
+              VOLVER A HACER PEDIDO
             </Link>
             <Link to="/" className="btn-secondary">
               Ir al inicio
@@ -98,7 +98,7 @@ const RevisarPedido = () => {
           <h1 className="text-2xl font-bold text-brandBlue mb-3">Revisar Pedido</h1>
           <p className="text-gray-700 mb-6">Tu carrito está vacío.</p>
           <Link to="/buscar" className="btn-accent inline-block">
-            ARMAR PEDIDO
+            HACER PEDIDO
           </Link>
         </div>
       </div>
@@ -106,8 +106,8 @@ const RevisarPedido = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <h1 className="text-3xl font-bold text-brandBlue mb-6">Revisar Pedido</h1>
+    <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 max-w-5xl">
+      <h1 className="text-2xl sm:text-3xl font-bold text-brandBlue mb-4 sm:mb-6">Revisar Pedido</h1>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
         <div className="divide-y divide-slate-100">
@@ -184,7 +184,7 @@ const RevisarPedido = () => {
 
       <div className="flex flex-col sm:flex-row gap-3">
         <Link to="/buscar" className="btn-secondary text-center">
-          VOLVER A ARMAR PEDIDO
+          VOLVER A HACER PEDIDO
         </Link>
         <button type="button" className="btn-primary" onClick={handleConfirm}>
           CONFIRMAR PEDIDO

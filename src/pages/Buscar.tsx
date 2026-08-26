@@ -84,16 +84,16 @@ const Buscar = () => {
     offerOnly ||
     sort !== null;
 
-  const catalogTitle = isClient ? 'ARMAR PEDIDO' : 'PRODUCTOS';
+  const catalogTitle = isClient ? 'HACER PEDIDO' : 'PRODUCTOS';
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
+    <div className={`container mx-auto px-3 sm:px-4 py-6 sm:py-8 ${isClient ? 'pb-24 lg:pb-8' : ''}`}>
+      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="min-w-0">
           {query.trim() ? (
             <>
-              <h1 className="text-3xl font-bold text-brandBlue mb-2">{catalogTitle}</h1>
-              <p className="text-gray-600">
+              <h1 className="text-2xl sm:text-3xl font-bold text-brandBlue mb-1 sm:mb-2">{catalogTitle}</h1>
+              <p className="text-sm sm:text-base text-gray-600 break-words">
                 Resultados para: <span className="text-gray-800 font-medium">{query}</span>
                 {' · '}
                 {total} {total === 1 ? 'producto' : 'productos'}
@@ -101,8 +101,8 @@ const Buscar = () => {
             </>
           ) : (
             <>
-              <h1 className="text-3xl font-bold text-brandBlue mb-2">{catalogTitle}</h1>
-              <p className="text-gray-600">
+              <h1 className="text-2xl sm:text-3xl font-bold text-brandBlue mb-1 sm:mb-2">{catalogTitle}</h1>
+              <p className="text-sm sm:text-base text-gray-600">
                 {total} {total === 1 ? 'producto' : 'productos'} disponibles
               </p>
             </>
@@ -110,17 +110,17 @@ const Buscar = () => {
         </div>
         <button
           onClick={handleClear}
-          className="btn-secondary whitespace-nowrap"
+          className="btn-secondary whitespace-nowrap self-start sm:self-auto"
           disabled={!hasActiveFilters}
         >
           Limpiar
         </button>
       </div>
 
-      <div className={`flex flex-col lg:flex-row gap-6 ${isClient ? 'lg:items-start' : 'gap-8'}`}>
+      <div className={`flex flex-col lg:flex-row gap-4 sm:gap-6 ${isClient ? 'lg:items-start' : ''}`}>
         <SearchFilters />
 
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 order-last lg:order-none">
           <ActiveFiltersChips />
 
           {total > 0 ? (
@@ -129,7 +129,7 @@ const Buscar = () => {
                 Mostrando {showingFrom} a {showingTo} de {total}
               </p>
 
-              <div className={`grid grid-cols-1 sm:grid-cols-2 ${isClient ? 'xl:grid-cols-2' : 'lg:grid-cols-2 xl:grid-cols-3'} gap-6`}>
+              <div className={`grid grid-cols-1 sm:grid-cols-2 ${isClient ? 'xl:grid-cols-2' : 'lg:grid-cols-2 xl:grid-cols-3'} gap-4 sm:gap-6`}>
                 {pageProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
@@ -152,7 +152,7 @@ const Buscar = () => {
                       onClick={() => goToPage(n)}
                       className={
                         n === currentPage
-                          ? 'bg-brandBlue text-white px-4 py-2 rounded-lg font-medium'
+                          ? 'bg-brandBlue text-white px-3 sm:px-4 py-2 rounded-lg font-medium'
                           : 'btn-secondary'
                       }
                       aria-current={n === currentPage ? 'page' : undefined}
@@ -172,16 +172,16 @@ const Buscar = () => {
               )}
             </>
           ) : (
-            <div className="text-center py-16">
-              <p className="text-xl text-gray-600 mb-4">
+            <div className="text-center py-12 sm:py-16 px-2">
+              <p className="text-lg sm:text-xl text-gray-600 mb-4">
                 {query.trim() ? `No se encontraron productos para "${query}"` : 'No hay productos disponibles'}
               </p>
-              <p className="text-gray-500 mb-6">
+              <p className="text-gray-500 mb-6 text-sm sm:text-base">
                 {query.trim()
                   ? 'Intentá con otros términos de búsqueda o revisá los filtros aplicados.'
                   : 'Ajustá los filtros para ver más resultados.'}
               </p>
-              <div className="flex gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <button onClick={handleClear} className="btn-secondary">
                   Limpiar filtros
                 </button>

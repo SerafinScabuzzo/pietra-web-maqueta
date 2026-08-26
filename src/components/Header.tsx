@@ -4,8 +4,8 @@ import { getAuth, logout } from '../utils/auth';
 import { getCurrentClient, getCartItemCount } from '../store/clientStore';
 import SearchBar from './SearchBar';
 
-const linkClass = 'text-slate-700 hover:text-blue-800 font-medium transition-colors whitespace-nowrap';
-const mobileLinkClass = 'block text-slate-700 font-medium py-2 hover:text-blue-800 transition-colors';
+const linkClass = 'text-slate-700 hover:text-blue-800 font-medium transition-colors whitespace-nowrap text-sm xl:text-base';
+const mobileLinkClass = 'block text-slate-700 font-medium py-2.5 hover:text-blue-800 transition-colors';
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -36,6 +36,16 @@ const Header = () => {
     };
   }, []);
 
+  // Cerrar menú al pasar a desktop ancho
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1280px)');
+    const onChange = () => {
+      if (mq.matches) setShowMobileMenu(false);
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
   const handleLogout = () => {
     logout();
     setAuth(getAuth());
@@ -48,7 +58,7 @@ const Header = () => {
   const desktopMenu = auth.isClient ? (
     <>
       <Link to="/" className={linkClass}>Inicio</Link>
-      <Link to="/buscar" className={linkClass}>Armar Pedido</Link>
+      <Link to="/buscar" className={linkClass}>Hacer Pedido</Link>
       <Link to="/categorias" className={linkClass}>Categorías</Link>
       <Link to="/marcas" className={linkClass}>Marcas</Link>
       <Link to="/catalogo" className={linkClass}>Catálogos</Link>
@@ -58,8 +68,8 @@ const Header = () => {
         className={`${linkClass} flex items-center gap-1 relative`}
         title="Carrito"
       >
-        <span>🛒</span>
-        <span className="hidden xl:inline">Carrito</span>
+        <span aria-hidden>🛒</span>
+        <span className="hidden 2xl:inline">Carrito</span>
         {cartCount > 0 && (
           <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
             {cartCount}
@@ -80,7 +90,7 @@ const Header = () => {
       <Link to="/catalogo" className={linkClass}>Catálogos</Link>
       <Link to="/empresa" className={linkClass}>Quiénes somos</Link>
       <Link to="/login" className={linkClass}>Ingresar</Link>
-      <Link to="/quiero-ser-cliente" className="btn-accent whitespace-nowrap">
+      <Link to="/quiero-ser-cliente" className="btn-accent whitespace-nowrap text-sm xl:text-base">
         Quiero ser cliente
       </Link>
     </>
@@ -89,7 +99,7 @@ const Header = () => {
   const mobileMenu = auth.isClient ? (
     <>
       <Link to="/" className={mobileLinkClass} onClick={closeMobile}>Inicio</Link>
-      <Link to="/buscar" className={mobileLinkClass} onClick={closeMobile}>Armar Pedido</Link>
+      <Link to="/buscar" className={mobileLinkClass} onClick={closeMobile}>Hacer Pedido</Link>
       <Link to="/categorias" className={mobileLinkClass} onClick={closeMobile}>Categorías</Link>
       <Link to="/marcas" className={mobileLinkClass} onClick={closeMobile}>Marcas</Link>
       <Link to="/catalogo" className={mobileLinkClass} onClick={closeMobile}>Catálogos</Link>
@@ -101,7 +111,7 @@ const Header = () => {
       <button
         type="button"
         onClick={handleLogout}
-        className="w-full text-left text-slate-700 font-medium py-2 hover:text-blue-800 transition-colors"
+        className="w-full text-left text-slate-700 font-medium py-2.5 hover:text-blue-800 transition-colors"
       >
         Salir
       </button>
@@ -117,7 +127,7 @@ const Header = () => {
       <Link to="/login" className={mobileLinkClass} onClick={closeMobile}>Ingresar</Link>
       <Link
         to="/quiero-ser-cliente"
-        className="btn-accent block text-center"
+        className="btn-accent block text-center mt-2"
         onClick={closeMobile}
       >
         Quiero ser cliente
@@ -127,8 +137,9 @@ const Header = () => {
 
   return (
     <header className="bg-white/70 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-200/70">
-      <div className="container mx-auto px-4 py-4">
-        <nav className="hidden md:flex items-center justify-between gap-4">
+      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+        {/* Desktop / laptop ancho: menú completo (xl+) */}
+        <nav className="hidden xl:flex items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:opacity-90 transition-opacity">
             <img
               src="/uploads/LOGO PIETRA 4.1.png"
@@ -142,11 +153,11 @@ const Header = () => {
             <span className="text-2xl font-bold text-blue-900">PietraItaly</span>
           </Link>
 
-          <div className="flex-1 flex justify-center min-w-0">
+          <div className="flex-1 flex justify-center min-w-0 px-2">
             <SearchBar />
           </div>
 
-          <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center gap-2 xl:gap-3 flex-shrink-0 max-w-[55%]">
             {desktopMenu}
             {auth.isAdmin && (
               <Link to="/admin" className={linkClass}>Admin</Link>
@@ -154,58 +165,75 @@ const Header = () => {
           </div>
         </nav>
 
-        <nav className="md:hidden">
-          <div className="flex items-center justify-between mb-4">
-            <Link to="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+        {/* Móvil + tablet: logo, búsqueda y hamburguesa */}
+        <nav className="xl:hidden">
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <Link to="/" className="flex items-center gap-2 min-w-0 hover:opacity-90 transition-opacity">
               <img
                 src="/uploads/LOGO PIETRA 4.1.png"
                 alt="PietraItaly"
-                className="h-8 w-auto object-contain"
+                className="h-8 w-auto object-contain flex-shrink-0"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
                 }}
               />
-              <span className="text-xl font-bold text-blue-900">PietraItaly</span>
+              <span className="text-lg sm:text-xl font-bold text-blue-900 truncate">PietraItaly</span>
             </Link>
-            <button
-              type="button"
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="p-2 text-gray-700 hover:text-brandBlue transition-colors"
-              aria-label="Menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <div className="flex items-center gap-1 flex-shrink-0">
+              {auth.isClient && (
+                <Link
+                  to="/revisar-pedido"
+                  className="relative p-2 text-gray-700 hover:text-brandBlue"
+                  aria-label="Carrito"
+                >
+                  <span aria-hidden>🛒</span>
+                  {cartCount > 0 && (
+                    <span className="absolute top-0.5 right-0.5 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
+              )}
+              <button
+                type="button"
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+                className="p-2 text-gray-700 hover:text-brandBlue transition-colors"
+                aria-label="Menu"
+                aria-expanded={showMobileMenu}
               >
-                {showMobileMenu ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  {showMobileMenu ? (
+                    <path d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div className="mb-1">
+            <SearchBar />
           </div>
 
           {showMobileMenu && (
-            <>
-              <div className="mb-4">
-                <SearchBar />
-              </div>
-              <div className="border-t border-slate-200/70 pt-4 space-y-2">
-                {mobileMenu}
-                {auth.isAdmin && (
-                  <Link to="/admin" className={mobileLinkClass} onClick={closeMobile}>
-                    Admin
-                  </Link>
-                )}
-              </div>
-            </>
+            <div className="border-t border-slate-200/70 pt-3 mt-3 space-y-1 max-h-[70vh] overflow-y-auto">
+              {mobileMenu}
+              {auth.isAdmin && (
+                <Link to="/admin" className={mobileLinkClass} onClick={closeMobile}>
+                  Admin
+                </Link>
+              )}
+            </div>
           )}
         </nav>
       </div>

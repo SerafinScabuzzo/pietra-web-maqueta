@@ -12,7 +12,9 @@ import { formatMoney } from '../utils/pricing';
 const CartPanel = () => {
   const client = getCurrentClient();
   const products = getProducts();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia('(max-width: 1023px)').matches : false
+  );
   const [, setTick] = useState(0);
 
   useEffect(() => {
@@ -27,15 +29,47 @@ const CartPanel = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const onChange = () => {
+      // En móvil/tablet arranca minimizado; en desktop abierto
+      setCollapsed(mq.matches);
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
   if (!client) return null;
 
   const view = buildCartView(products, client.discountRate, client.cuit);
 
   if (collapsed) {
     return (
-      <aside className="w-full lg:w-56 flex-shrink-0">
-        <div className="bg-white rounded-lg shadow-md p-4 lg:sticky lg:top-24">
-          <p className="font-semibold text-blue-900 mb-1">🛒 Carrito</p>
+      <aside className="w-full lg:w-56 flex-shrink-0 order-first lg:order-none">
+        {/* Barra fija abajo en móvil/tablet */}
+        <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.08)] p-3 safe-bottom">
+          <div className="container mx-auto flex items-center gap-3 max-w-5xl">
+            <div className="min-w-0 flex-1">
+              <p className="font-semibold text-blue-900 text-sm truncate">Carrito</p>
+              <p className="text-xs text-gray-600 truncate">
+                {view.productCount} prod. · {view.unitCount} unid. · ${formatMoney(view.total)}
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn-secondary text-sm shrink-0"
+              onClick={() => setCollapsed(false)}
+            >
+              Ver
+            </button>
+            <Link to="/revisar-pedido" className="btn-primary text-sm shrink-0">
+              Revisar
+            </Link>
+          </div>
+        </div>
+
+        <div className="hidden lg:block bg-white rounded-lg shadow-md p-4 lg:sticky lg:top-24">
+          <p className="font-semibold text-blue-900 mb-1">Carrito</p>
           <p className="text-sm text-gray-600 mb-3">
             {view.productCount} {view.productCount === 1 ? 'producto' : 'productos'} /{' '}
             {view.unitCount} {view.unitCount === 1 ? 'unidad' : 'unidades'}
@@ -49,8 +83,8 @@ const CartPanel = () => {
   }
 
   return (
-    <aside className="w-full lg:w-[300px] xl:w-[320px] flex-shrink-0">
-      <div className="bg-white rounded-lg shadow-md lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] flex flex-col">
+    <aside className="w-full lg:w-[300px] xl:w-[320px] flex-shrink-0 order-first lg:order-none mb-4 lg:mb-0">
+      <div className="bg-white rounded-lg shadow-md lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] flex flex-col max-h-[70vh] lg:max-h-[calc(100vh-7rem)]">
         <div className="flex items-center justify-between p-4 border-b border-slate-200">
           <h2 className="text-lg font-bold text-blue-900">Carrito</h2>
           <button
@@ -96,7 +130,7 @@ const CartPanel = () => {
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       type="button"
-                      className="w-6 h-6 flex items-center justify-center border border-slate-300 rounded"
+                      className="w-8 h-8 flex items-center justify-center border border-slate-300 rounded"
                       onClick={() =>
                         updateCartItemQuantity(line.product.id, line.quantity - 1)
                       }
@@ -106,7 +140,7 @@ const CartPanel = () => {
                     <span className="w-7 text-center text-sm">{line.quantity}</span>
                     <button
                       type="button"
-                      className="w-6 h-6 flex items-center justify-center border border-slate-300 rounded"
+                      className="w-8 h-8 flex items-center justify-center border border-slate-300 rounded"
                       onClick={() =>
                         updateCartItemQuantity(line.product.id, line.quantity + 1)
                       }

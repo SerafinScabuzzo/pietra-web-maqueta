@@ -36,7 +36,7 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       {/* FONDO GLOBAL AZUL CLARITO - Ajustar colores aquí si se desea cambiar la paleta */}
-      <div className="relative min-h-screen w-full overflow-hidden">
+      <div className="relative min-h-screen w-full overflow-x-hidden">
         {/* Fondo base: gradiente azul clarito (sky/blue/indigo claro - azul más notorio) */}
         <div className="fixed inset-0 bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100"></div>
         

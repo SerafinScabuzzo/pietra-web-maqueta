@@ -28,6 +28,8 @@ const loadClients = (): void => {
             ...c,
             email: c.email ?? seed?.email ?? '',
             clientNumber: c.clientNumber ?? seed?.clientNumber ?? c.code,
+            // Preferir el descuento del mock seed (p. ej. 40%) sobre valores viejos en localStorage
+            discountRate: seed?.discountRate ?? c.discountRate,
             favorites: c.favorites || [],
           };
         });
@@ -126,7 +128,7 @@ export const ensureDemoClient = (): Client => {
       businessName: 'Negocio Demo',
       address: 'Dirección Demo 123',
       email: 'demo@pietraitaly.com.ar',
-      discountRate: 0.55,
+      discountRate: 0.4,
       favorites: [],
     };
     

@@ -3,8 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply overflow-x-hidden;
+  }
+
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-gray-50 text-gray-900 overflow-x-hidden min-w-0;
+  }
+
+  img,
+  video,
+  svg {
+    @apply max-w-full h-auto;
   }
 
   a {

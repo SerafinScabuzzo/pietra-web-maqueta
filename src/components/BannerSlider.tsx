@@ -20,7 +20,7 @@ const BannerSlider = ({ banners }: BannerSliderProps) => {
 
   if (banners.length === 0) {
     return (
-      <div className="w-full h-[420px] md:h-[560px] bg-brandGray flex items-center justify-center">
+      <div className="w-full h-[240px] sm:h-[340px] md:h-[460px] lg:h-[560px] bg-brandGray flex items-center justify-center">
         <div className="text-gray-500">No hay banners disponibles</div>
       </div>
     );
@@ -31,7 +31,7 @@ const BannerSlider = ({ banners }: BannerSliderProps) => {
 
   return (
     <div
-      className="relative w-full h-[420px] md:h-[560px] overflow-hidden"
+      className="relative w-full h-[240px] sm:h-[340px] md:h-[460px] lg:h-[560px] overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -45,22 +45,22 @@ const BannerSlider = ({ banners }: BannerSliderProps) => {
         }}
       />
       <div className="absolute inset-0 bg-black/40 flex items-center">
-        <div className="px-8 md:px-16 text-white max-w-3xl">
-          <h2 className="text-3xl md:text-5xl font-bold mb-3">{banner.title}</h2>
+        <div className="px-4 sm:px-8 md:px-16 text-white max-w-3xl">
+          <h2 className="text-xl sm:text-3xl md:text-5xl font-bold mb-2 sm:mb-3 leading-tight">{banner.title}</h2>
           {banner.subtitle && (
-            <p className="text-lg md:text-2xl mb-6 text-gray-100">{banner.subtitle}</p>
+            <p className="text-sm sm:text-lg md:text-2xl mb-4 sm:mb-6 text-gray-100 line-clamp-2 sm:line-clamp-none">{banner.subtitle}</p>
           )}
           {isExternal ? (
             <a
               href={banner.buttonLink}
               target="_blank"
               rel="noreferrer"
-              className="btn-accent inline-block"
+              className="btn-accent inline-block text-sm sm:text-base"
             >
               {banner.buttonText}
             </a>
           ) : (
-            <Link to={banner.buttonLink} className="btn-accent inline-block">
+            <Link to={banner.buttonLink} className="btn-accent inline-block text-sm sm:text-base">
               {banner.buttonText}
             </Link>
           )}
@@ -74,20 +74,20 @@ const BannerSlider = ({ banners }: BannerSliderProps) => {
             onClick={() =>
               setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length)
             }
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full transition-colors"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-orange-500 hover:bg-orange-600 text-white p-1.5 sm:p-2 rounded-full transition-colors"
             aria-label="Anterior"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button
             type="button"
             onClick={() => setCurrentIndex((prev) => (prev + 1) % banners.length)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full transition-colors"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-orange-500 hover:bg-orange-600 text-white p-1.5 sm:p-2 rounded-full transition-colors"
             aria-label="Siguiente"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>

@@ -18,7 +18,7 @@ export interface Banner {
 }
 
 const STORAGE_KEY = 'pietra_admin_store';
-const STORE_VERSION = 1;
+const STORE_VERSION = 4;
 
 const LEGACY_CATEGORY_IDS: Record<string, string> = {
   'pietra-herramientas': 'herramientas',

@@ -211,8 +211,8 @@ const AdminLayout = () => {
         )}
 
         {/* Content Area */}
-        <main className="py-6 px-4">
-          <div className="bg-white/70 backdrop-blur-md border border-slate-200/70 rounded-2xl shadow-sm p-6">
+        <main className="py-4 sm:py-6 px-3 sm:px-4">
+          <div className="bg-white/70 backdrop-blur-md border border-slate-200/70 rounded-2xl shadow-sm p-4 sm:p-6 overflow-x-auto">
             <Outlet />
           </div>
         </main>

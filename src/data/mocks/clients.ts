@@ -11,7 +11,7 @@ export const clients: Client[] = [
     businessName: 'Ferretería Pérez S.A.',
     address: 'Av. Corrientes 1234, CABA',
     email: 'juan.perez@ejemplo.com',
-    discountRate: 0.55, // 55% descuento, paga 45%
+    discountRate: 0.4, // 40% descuento, paga 60%
     favorites: [],
   },
   {
@@ -24,7 +24,7 @@ export const clients: Client[] = [
     businessName: 'Negocio Demo',
     address: 'Dirección Demo 123',
     email: 'demo@pietraitaly.com.ar',
-    discountRate: 0.55, // 55% descuento, paga 45%
+    discountRate: 0.4, // 40% descuento, paga 60%
     favorites: [],
   },
 ];

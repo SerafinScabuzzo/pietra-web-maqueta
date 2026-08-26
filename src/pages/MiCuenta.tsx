@@ -64,18 +64,18 @@ const MiCuenta = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold text-brandBlue mb-8">Mi Cuenta</h1>
+    <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 max-w-4xl">
+      <h1 className="text-2xl sm:text-3xl font-bold text-brandBlue mb-6 sm:mb-8">Mi Cuenta</h1>
 
       <div className="bg-white rounded-lg shadow-md p-6 mb-8 border-l-4 border-brandOrange">
         <h2 className="text-xl md:text-2xl font-bold text-brandBlue mb-3">
           ¿QUERÉS HACER UN PEDIDO?
         </h2>
         <p className="text-gray-600 mb-4">
-          Armá tu pedido desde el catálogo con precios y cantidades de cliente.
+          Hacé tu pedido desde el catálogo con precios y cantidades de cliente.
         </p>
         <Link to="/buscar" className="btn-accent inline-block">
-          ARMAR PEDIDO
+          HACER PEDIDO
         </Link>
       </div>
 

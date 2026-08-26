@@ -19,9 +19,9 @@ const MisPedidos = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
-        <h1 className="text-3xl font-bold text-brandBlue">Mis Pedidos Realizados</h1>
-        <Link to="/mi-cuenta" className="btn-secondary shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-brandBlue">Mis Pedidos Realizados</h1>
+        <Link to="/mi-cuenta" className="btn-secondary shrink-0 text-sm sm:text-base">
           ← Volver a Mi Cuenta
         </Link>
       </div>
