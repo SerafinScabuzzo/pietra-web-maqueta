@@ -74,21 +74,45 @@ const MiCuenta = () => {
         <p className="text-gray-600 mb-4">
           Hacé tu pedido desde el catálogo con precios y cantidades de cliente.
         </p>
-        <Link to="/buscar" className="btn-accent inline-block">
+        <Link to="/buscar" className="btn-accent inline-block w-full sm:w-auto text-center">
           HACER PEDIDO
         </Link>
-        <div className="mt-4 flex flex-col gap-2 max-w-xs">
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
           <Link
             to="/pedido-codigo"
-            className="inline-flex items-center justify-center rounded-lg bg-sky-100 text-blue-800 border border-blue-200 px-4 py-2.5 text-sm font-semibold hover:bg-sky-200 transition-colors"
+            className="group flex items-center gap-3 rounded-xl border-2 border-violet-200 bg-gradient-to-br from-violet-50 via-white to-violet-50/40 px-4 py-4 shadow-sm transition hover:border-violet-500 hover:shadow-md"
           >
-            Pedido Código
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-white shadow-sm group-hover:bg-violet-700 transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+              </svg>
+            </span>
+            <span className="text-left">
+              <span className="block text-sm font-bold text-violet-800 group-hover:underline">
+                Pedido Código
+              </span>
+              <span className="block text-xs text-gray-500 mt-0.5">
+                Cargá productos por código
+              </span>
+            </span>
           </Link>
           <Link
             to="/pedido-excel"
-            className="inline-flex items-center justify-center rounded-lg bg-sky-100 text-blue-800 border border-blue-200 px-4 py-2.5 text-sm font-semibold hover:bg-sky-200 transition-colors"
+            className="group flex items-center gap-3 rounded-xl border-2 border-green-200 bg-gradient-to-br from-green-50 via-white to-green-50/40 px-4 py-4 shadow-sm transition hover:border-green-500 hover:shadow-md"
           >
-            Pedido Excel
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-600 text-white shadow-sm group-hover:bg-green-700 transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </span>
+            <span className="text-left">
+              <span className="block text-sm font-bold text-green-800 group-hover:underline">
+                Pedido Excel
+              </span>
+              <span className="block text-xs text-gray-500 mt-0.5">
+                Subí tu archivo con códigos
+              </span>
+            </span>
           </Link>
         </div>
       </div>
