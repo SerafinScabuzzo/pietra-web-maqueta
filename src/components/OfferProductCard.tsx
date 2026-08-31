@@ -39,12 +39,12 @@ const OfferProductCard = ({ product }: OfferProductCardProps) => {
       )}
 
       {/* Imagen */}
-      <div className="relative w-full h-48 bg-brandGray overflow-hidden">
+      <div className="relative w-full h-64 sm:h-72 bg-white overflow-hidden flex items-center justify-center p-3">
         {mainImage ? (
           <img
             src={mainImage}
             alt={product.name}
-            className="w-full h-full object-cover"
+            className="max-w-full max-h-full w-auto h-auto object-contain"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
@@ -69,11 +69,6 @@ const OfferProductCard = ({ product }: OfferProductCardProps) => {
         <h3 className="text-base font-semibold text-gray-800 mb-2 line-clamp-2">
           {product.name}
         </h3>
-        {product.shortDescription && (
-          <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-            {product.shortDescription}
-          </p>
-        )}
         <p className="text-xs text-gray-500 mb-3">SKU: {product.sku}</p>
 
         {/* Precios destacados */}

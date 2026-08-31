@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { getCurrentClient } from '../store/clientStore';
 import { getProducts } from '../store/adminStore';
 
 const Favoritos = () => {
-  const navigate = useNavigate();
   const client = getCurrentClient();
   const allProducts = getProducts();
 

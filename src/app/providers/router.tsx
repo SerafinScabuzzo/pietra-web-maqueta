@@ -17,6 +17,8 @@ import MiCuenta from '../../pages/MiCuenta';
 import MisPedidos from '../../pages/MisPedidos';
 import MisFacturas from '../../pages/MisFacturas';
 import RevisarPedido from '../../pages/RevisarPedido';
+import PedidoCodigo from '../../pages/PedidoCodigo';
+import PedidoExcel from '../../pages/PedidoExcel';
 import AdminLayout from '../../pages/admin/AdminLayout';
 import AdminDashboard from '../../pages/admin/AdminDashboard';
 import AdminProductos from '../../pages/admin/AdminProductos';
@@ -77,6 +79,8 @@ const AppRouter = () => {
             <Route path="/mis-pedidos" element={<MisPedidos />} />
             <Route path="/mis-facturas" element={<MisFacturas />} />
             <Route path="/revisar-pedido" element={<RevisarPedido />} />
+            <Route path="/pedido-codigo" element={<PedidoCodigo />} />
+            <Route path="/pedido-excel" element={<PedidoExcel />} />
             
             {/* Admin Routes */}
             <Route

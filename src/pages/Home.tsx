@@ -45,19 +45,9 @@ const Home = () => {
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* 2. Rubros (estilo Genebre: entrada visual por familia) */}
         <section className="mb-12 sm:mb-16">
-          <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
-            <div>
-              <p className="text-sm font-medium text-brandOrange mb-1">Explorá por rubro</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-blue-900">
-                Categorías
-              </h2>
-            </div>
-            <Link
-              to="/categorias"
-              className="inline-flex items-center rounded-lg bg-brandBlue text-white px-5 py-2.5 text-base sm:text-lg font-bold hover:bg-blue-800 transition-colors shadow-sm"
-            >
-              Ver todas →
-            </Link>
+          <div className="mb-6 text-center">
+            <p className="text-sm font-medium text-brandOrange mb-1">Explorá por rubro</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-900">Categorías</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             {homeCategories.map((category) => (
@@ -69,21 +59,18 @@ const Home = () => {
               />
             ))}
           </div>
+          <div className="mt-8 flex justify-center">
+            <Link to="/categorias" className="btn-see-all">
+              Ver todas →
+            </Link>
+          </div>
         </section>
 
         {/* 3. Catálogos */}
         <section className="mb-12 sm:mb-16">
-          <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
-            <div>
-              <p className="text-sm font-medium text-brandOrange mb-1">Descargas</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-blue-900">Catálogos</h2>
-            </div>
-            <Link
-              to="/catalogo"
-              className="inline-flex items-center rounded-lg bg-brandBlue text-white px-5 py-2.5 text-base sm:text-lg font-bold hover:bg-blue-800 transition-colors shadow-sm"
-            >
-              Ver todos →
-            </Link>
+          <div className="mb-6 text-center">
+            <p className="text-sm font-medium text-brandOrange mb-1">Descargas</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-900">Catálogos</h2>
           </div>
           {catalogs.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -94,6 +81,11 @@ const Home = () => {
           ) : (
             <p className="text-gray-600 text-center py-8">No hay catálogos disponibles.</p>
           )}
+          <div className="mt-8 flex justify-center">
+            <Link to="/catalogo" className="btn-see-all">
+              Ver todos →
+            </Link>
+          </div>
         </section>
 
         {/* 4. Destacados */}
@@ -113,16 +105,9 @@ const Home = () => {
 
         {/* 5. Ofertas */}
         <section className="mb-12 sm:mb-16">
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-blue-900">Ofertas especiales</h2>
-            <button
-              type="button"
-              onClick={handleSeeAllOffers}
-              className="inline-flex items-center rounded-lg bg-brandBlue text-white px-5 py-2.5 text-base sm:text-lg font-bold hover:bg-blue-800 transition-colors shadow-sm"
-            >
-              Ver todas →
-            </button>
-          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-6 text-center">
+            Ofertas especiales
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {offerProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -131,8 +116,11 @@ const Home = () => {
           {offerProducts.length === 0 && (
             <p className="text-gray-600 text-center py-8">No hay ofertas disponibles</p>
           )}
-          <div className="mt-8 text-center">
-            <Link to="/buscar" className="btn-accent inline-block">
+          <div className="mt-8 flex flex-col items-center gap-4">
+            <button type="button" onClick={handleSeeAllOffers} className="btn-see-all">
+              Ver todas →
+            </button>
+            <Link to="/buscar" className="btn-see-all-accent">
               Ver todos los productos
             </Link>
           </div>

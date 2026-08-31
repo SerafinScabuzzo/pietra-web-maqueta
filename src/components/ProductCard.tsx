@@ -101,12 +101,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       {/* Imagen */}
       <Link to={`/producto/${product.id}`}>
-        <div className="relative w-full h-48 bg-brandGray overflow-hidden">
+        <div className="relative w-full h-64 sm:h-72 bg-white overflow-hidden flex items-center justify-center p-3">
           {mainImage ? (
             <img
               src={mainImage}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="max-w-full max-h-full w-auto h-auto object-contain"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';

@@ -41,12 +41,12 @@ const Producto = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Galería de imágenes */}
         <div>
-          <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4 flex items-center justify-center min-h-[28rem] p-4">
             {mainImage ? (
               <img
                 src={mainImage}
                 alt={product.name}
-                className="w-full h-96 object-cover"
+                className="max-w-full max-h-[26rem] w-auto h-auto object-contain"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
