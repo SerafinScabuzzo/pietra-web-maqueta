@@ -175,6 +175,55 @@ const MiCuenta = () => {
           </p>
         </div>
 
+        <div className="bg-brandGray rounded-lg p-4">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Descarga de Listas</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="border-b border-gray-300 text-gray-700">
+                  <th className="py-2 pr-4 font-semibold">Archivo</th>
+                  <th className="py-2 pr-4 font-semibold">Lista</th>
+                  <th className="py-2 font-semibold">Vigencia</th>
+                </tr>
+              </thead>
+              <tbody>
+                {priceLists.map((list) => (
+                  <tr key={list.id} className="border-b border-gray-200 last:border-0">
+                    <td className="py-3 pr-4">
+                      <button
+                        type="button"
+                        onClick={() => downloadPriceListFile(list)}
+                        className="inline-flex items-center gap-2 text-brandBlue hover:underline"
+                        title={`Descargar ${list.fileFormat}`}
+                      >
+                        {list.imageUrl ? (
+                          <img
+                            src={list.imageUrl}
+                            alt=""
+                            className="w-10 h-10 object-cover rounded border border-gray-200"
+                          />
+                        ) : (
+                          <span className="w-10 h-10 inline-flex items-center justify-center rounded border border-gray-300 bg-white text-xs font-bold text-gray-600">
+                            {list.fileFormat.toUpperCase()}
+                          </span>
+                        )}
+                        <span className="sr-only">
+                          Ver {list.fileFormat === 'pdf' ? 'pdf' : 'xlsx'}
+                        </span>
+                      </button>
+                    </td>
+                    <td className="py-3 pr-4 font-medium text-gray-900">{list.listType}</td>
+                    <td className="py-3 text-gray-700">{list.validity || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {priceLists.length === 0 && (
+              <p className="text-gray-500 text-sm py-4">No hay listas disponibles.</p>
+            )}
+          </div>
+        </div>
+
         <div className="bg-brandGray rounded-lg p-4 space-y-3">
           <h3 className="text-lg font-semibold text-gray-800">Cambio de Contraseña</h3>
           <div>
@@ -226,55 +275,6 @@ const MiCuenta = () => {
           <button type="button" onClick={handleChangeEmail} className="btn-primary">
             CAMBIAR EMAIL
           </button>
-        </div>
-
-        <div className="bg-brandGray rounded-lg p-4">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Descarga de Listas</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead>
-                <tr className="border-b border-gray-300 text-gray-700">
-                  <th className="py-2 pr-4 font-semibold">Archivo</th>
-                  <th className="py-2 pr-4 font-semibold">Lista</th>
-                  <th className="py-2 font-semibold">Vigencia</th>
-                </tr>
-              </thead>
-              <tbody>
-                {priceLists.map((list) => (
-                  <tr key={list.id} className="border-b border-gray-200 last:border-0">
-                    <td className="py-3 pr-4">
-                      <button
-                        type="button"
-                        onClick={() => downloadPriceListFile(list)}
-                        className="inline-flex items-center gap-2 text-brandBlue hover:underline"
-                        title={`Descargar ${list.fileFormat}`}
-                      >
-                        {list.imageUrl ? (
-                          <img
-                            src={list.imageUrl}
-                            alt=""
-                            className="w-10 h-10 object-cover rounded border border-gray-200"
-                          />
-                        ) : (
-                          <span className="w-10 h-10 inline-flex items-center justify-center rounded border border-gray-300 bg-white text-xs font-bold text-gray-600">
-                            {list.fileFormat.toUpperCase()}
-                          </span>
-                        )}
-                        <span className="sr-only">
-                          Ver {list.fileFormat === 'pdf' ? 'pdf' : 'xlsx'}
-                        </span>
-                      </button>
-                    </td>
-                    <td className="py-3 pr-4 font-medium text-gray-900">{list.listType}</td>
-                    <td className="py-3 text-gray-700">{list.validity || '—'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {priceLists.length === 0 && (
-              <p className="text-gray-500 text-sm py-4">No hay listas disponibles.</p>
-            )}
-          </div>
         </div>
       </div>
     </div>
