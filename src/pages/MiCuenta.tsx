@@ -77,6 +77,20 @@ const MiCuenta = () => {
         <Link to="/buscar" className="btn-accent inline-block">
           HACER PEDIDO
         </Link>
+        <div className="mt-4 flex flex-col gap-2 max-w-xs">
+          <Link
+            to="/pedido-codigo"
+            className="inline-flex items-center justify-center rounded-lg bg-sky-100 text-blue-800 border border-blue-200 px-4 py-2.5 text-sm font-semibold hover:bg-sky-200 transition-colors"
+          >
+            Pedido Código
+          </Link>
+          <Link
+            to="/pedido-excel"
+            className="inline-flex items-center justify-center rounded-lg bg-sky-100 text-blue-800 border border-blue-200 px-4 py-2.5 text-sm font-semibold hover:bg-sky-200 transition-colors"
+          >
+            Pedido Excel
+          </Link>
+        </div>
       </div>
 
       <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
